@@ -293,3 +293,27 @@ st.caption("Sources when live: COMEX front-month futures (GC=F), FRED DFII10, "
            "tariff heading 7108. Event rules: Feb 22 reserve freeze, Jun 22 "
            "G7 import ban, Jun 25 Iran war, Nov 25 CBR sales begin, May 26 "
            "escalation.")
+
+with tabD:
+    st.subheader("Explore one country")
+
+    country = st.selectbox(
+        "Choose a country", sorted(declared["country"].unique())
+    )
+    country_data = declared[declared["country"] == country]
+
+    fig = px.bar(
+        country_data, x="date", y="net_purchases_t",
+        labels={"date": "Month", "net_purchases_t": "Tonnes"},
+        title=f"{country}: monthly purchases and sales (sample data)",
+    )
+    st.plotly_chart(fig, width="stretch")
+
+    st.caption(
+        "The ranking above answers 'who bought or sold more over the last 12 months?'. "
+        "This view answers 'when did this country buy or sell?' and covers every month "
+        "in the supplied table. Bars above zero are net buying; below zero, net selling. "
+        "Sample data for practice."
+    )
+
+
